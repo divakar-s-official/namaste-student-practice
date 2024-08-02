@@ -102,3 +102,72 @@ useEffect();
                 refreshes the component
 
                 so that is why our react application are known as single page application.
+
+
+
+#  Redux Toolikit
+
+    - Install @reduxjs/toolkit and react-redux
+
+    Build our store 
+    connect our store to our app
+    slice (cartSlice )
+    dispatch(action)
+    selector
+
+
+
+// first step is to use configurestore() is to create a redux store
+const appStore = configureStore({
+    cart: cartReducer,
+})
+
+
+//seecond step is to provide this store where it can accessible by any other component from react-redux
+<provider store={appStore}>
+    // used to wrap part of the application
+</provider>
+
+
+//createSlices --- cart example for my reference
+
+const cartSlice = createSlice({
+    // it takes a configuration
+    name: "cart",
+    initialState: {
+        items: [],
+    },
+    reducers: {
+        addItem: (state, action) => {
+            state.items.push(action.payload)        
+        },
+
+        removeItem: (state) => {
+            state.items.pop()
+        },
+
+        clearcart: (state) => {
+            state.items.length = 0;
+        }
+
+    }});
+
+    //when you click on this add button
+
+    const dispatch = useDispatch();
+
+    //  it dispatches an action and calls the reducer function 
+
+    onclick = () => {
+        dispatch(addItem(items));
+    }
+
+    //selector
+
+    //to read data from the redux store
+
+    // we need to use selector to subscribing to the store
+
+    //make sure you are subscribing to the right portion of the slice inside the redux store
+    const selector = useSelector((store) => store.cart.items);
+
